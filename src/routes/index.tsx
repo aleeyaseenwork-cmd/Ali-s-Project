@@ -101,8 +101,9 @@ function CountUp({
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting || started.current) return;
+      (entries) => {
+        const entry = entries[0];
+        if (!entry || !entry.isIntersecting || started.current) return;
         started.current = true;
         const t0 = performance.now();
         const tick = (now: number) => {
@@ -543,9 +544,9 @@ function Leaderboard() {
 /* ---------- stats ---------- */
 
 const stats = [
-  { target: 5000, suffix: "+", label: "Analyses Generated" },
+  { target: 5000, prefix: "", suffix: "+", label: "Analyses Generated" },
   { target: 23, prefix: "€", suffix: "M+", label: "In Tracked Community Volume" },
-  { target: 94, suffix: "%", label: "Analysis Accuracy Rating" },
+  { target: 94, prefix: "", suffix: "%", label: "Analysis Accuracy Rating" },
 ];
 
 function Stats() {
